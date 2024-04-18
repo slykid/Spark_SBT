@@ -4,6 +4,7 @@ for(bool <- bools)
 {
     bool match {
       case true => println("Got heads")
-      case false => println("Got tails")
+//      case false => println("Got tails")
+      case _ => print("Got tails")
     }
 }
