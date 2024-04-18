@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/spark_sbt.iml" filepath="$PROJECT_DIR$/.idea/modules/spark_sbt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spark_sbt-build.iml" filepath="$PROJECT_DIR$/.idea/modules/spark_sbt-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spark_sbt.spark_sbt-build.iml" filepath="$PROJECT_DIR$/.idea/modules/spark_sbt.spark_sbt-build.iml" />
     </modules>
   </component>
 </project>
