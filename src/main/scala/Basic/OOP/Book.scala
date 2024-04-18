@@ -6,7 +6,7 @@ class Book(var title: String, var author: String)
 // - val: getter 만 생성
 {
     // 기본 생성자 생성방법
-    def this(title: String) = {
-        this(title, "anonymous")
+    def this(author: String) = {
+        this(author, "anonymous")
     }
 }
