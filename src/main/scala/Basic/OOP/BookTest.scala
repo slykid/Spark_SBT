@@ -13,7 +13,7 @@ object BookTest {
 
         println(s"${myBook2.title} is written by ${myBook2.author}.")
 
-        val myBook3 = new Book(title="My awesome book 3")
+        val myBook3 = new Book(title="My awesome Book 3")
         println("My Book3 author: " + myBook3.author)
 
         // Named Parameter (파이썬의 방식과 동일함)
