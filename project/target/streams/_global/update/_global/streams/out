@@ -1,3 +1,4 @@
-[debug] not up to date. inChanged = true, force = false
+[warn] scala-xml_2.12-2.1.0.jar no longer exists at /Users/kilhyunkim/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.1.0/scala-xml_2.12-2.1.0.jar
+[debug] not up to date. inChanged = false, force = false
 [debug] Updating ProjectRef(uri("file:/Users/kilhyunkim/workspace/Spark_SBT/project/"), "spark_sbt-build")...
 [debug] Done updating ProjectRef(uri("file:/Users/kilhyunkim/workspace/Spark_SBT/project/"), "spark_sbt-build")
