@@ -72,7 +72,33 @@ object RddOperation {
     println(rdd2.collect.mkString(", "))
   }
 
+  def mapPartitionsWithIndexFunction(sc: SparkContext): Unit = {
+    /*
+      6. mapPartitionsWithIndex()
+      - 인자로 전달받은 함수를 파티션단위로 적용하고, 결과값으로 구성된 새로운 RDD를 생성하는 메소드
+      - 해당 파티션의 인덱스 정보도 포함해서 결과를 생성함
+    */
+    val rdd1 = sc.parallelize(1 to 10, 3)
+    val rdd2 = rdd1.mapPartitionsWithIndex((idx, numbers) => {
+      numbers.flatMap {
+        case number if idx == 1 => Option(number + 1)
+        case _                  => None
+      }
+    })
 
+    println(rdd2.collect.mkString(", "))
+  }
+
+  def mapValuesFunction(sc: SparkContext): Unit = {
+    /*
+      7. mapValues
+      - RDD의 모든 요소가 "키(key)-값(value)" 쌍으로 이루어진 경우(=페어 RDD, Pair RDD) 사용 가능
+      - 키 부분은 그대로 두고, 값에만 map 함수를 적용한 (키, 값) 형태의 RDD를 반환
+    */
+    val rdd = sc.parallelize(List("a", "b", "c")).map((_, 1))
+    val result = rdd.mapValues(i => i + 1)
+    println(result.collect.mkString("\t"))
+  }
 
   def main(args: Array[String]): Unit = {
 
@@ -87,6 +113,7 @@ object RddOperation {
     mapFunction(sc)
     flatMapFunction(sc)
     mapPartitionsFunction(sc)
+    mapPartitionsWithIndexFunction(sc)
 
     sc.stop()
 
