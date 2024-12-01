@@ -29,10 +29,13 @@ class ShapesDrawingActor extends Actor{
             - 함수에 전달된 메세지의 패턴 매칭을 수행하는 case 절로만 구성됨
                 - 패턴 중 하나가 일치할 경우 => 와 다음번 case 절 사이의 식을 평가함
                   (case 키워드가 코드의 모호성을 제거하므로 중간에 {} 로 블록을 설정하지 않아도 됨)
+
+            - ! : 비동기 메세지를 보내는 메소드
+              ※ 메소드가 1개의 인자만 취하는 경우 객체 뒤의 마침표를 생략하고, 인자를 둘러싼 괄호의 생략도 가능함
         */
         case s: Shape =>
             s.draw(str => println(s"ShapesDrawingActor: $str"))
-            sender ! Response(s"ShapesDrawingActor: $s drawn")
+            sender ! Response(s"ShapesDrawingActor: $s drawn")  // sender.!(Response(s"ShapesDrawingActor: $s drawn")) 와 동일함
         case Exit =>
             println(s"ShapesDrawingActor: exiting...")
             sender ! Finished
