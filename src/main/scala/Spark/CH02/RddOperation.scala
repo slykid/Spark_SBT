@@ -2,6 +2,8 @@ package Spark.CH02
 
 import org.apache.spark.{SparkConf, SparkContext}
 
+import scala.collection.mutable.ListBuffer
+
 object RddOperation {
 
   def collectFunction(sc: SparkContext): Unit = {
@@ -97,7 +99,98 @@ object RddOperation {
     */
     val rdd = sc.parallelize(List("a", "b", "c")).map((_, 1))
     val result = rdd.mapValues(i => i + 1)
+
     println(result.collect.mkString("\t"))
+  }
+
+  def flatMapValuesFunction(sc: SparkContext): Unit = {
+    /*
+      8. flatMapValues
+      - RDD 구성요소가 키-값 쌍인 경우에만 사용할 수 있는 메소드
+    */
+    val rdd = sc.parallelize(Seq((1, "a,b"), (2, "a,c"), (1, "d,e")))
+    val result = rdd.flatMapValues(_.split(","))
+
+    println(result.collect.mkString("\t"))
+
+  }
+
+  def zipFunction(sc: SparkContext): Unit = {
+    /*
+      9. zip
+      - 2개의 서로 다른 RDD를 각 요소의 인덱스에 따라 하나의 (키, 값) 쌍으로 묶어주는 메소드
+      - 첫 번째 RDD의 요소 값을 키로, 두 번째 RDD의 요소 값을 값으로 사용함
+    */
+    val rdd1 = sc.parallelize(List("a", "b", "c"))
+    val rdd2 = sc.parallelize(List(1, 2, 3))
+
+    val result = rdd1.zip(rdd2)
+
+    println(result.collect.mkString(", "))
+
+  }
+
+  def zipPartitionsFunction(sc: SparkContext): Unit = {
+    /*
+      10. zipPartitions
+      - 파티션 단위로 zip 연산을 수행할 때 사용하는 메소드
+      - 요소들의 집합 단위로 병합을 실행하므로 파티션의 개수만 동일하면 됨
+    */
+    val rdd1 = sc.parallelize(List("a", "b", "c", "d", "e"))
+    val rdd2 = sc.parallelize(List(1, 2), 3)
+
+    val result = rdd1.zipPartitions(rdd2) {
+      (it1, it2) =>
+        val result = new ListBuffer[String]
+        while(it1.hasNext)
+        {
+          if(it2.hasNext)
+          {
+            result += (it1.next() + it2.next)
+          }
+          else
+          {
+            result += it1.next()
+          }
+        }
+        result.iterator
+    }
+
+    println(result.collect.mkString(", "))
+  }
+
+  def groupByFunction(sc: SparkContext): Unit = {
+    /*
+      11. groupBy
+      - 일정한 기준에 따라 여러 개의 그룹으로 나누고, 그룹으로 구성된 새로운 RDD를 생성하는 메소드
+      - 키와 해당 키에 속한 요소의 시퀀스로 구성되며, 메소드 인자로 전달하는 함수가 각 그룹의 키를 결정하는 역할을 함
+    */
+    val rdd = sc.parallelize(1 to 10)
+    val result = rdd.groupBy{
+      case i: Int if (i % 2 == 0) => "even"
+      case _                      => "odd"
+
+    }
+
+    result.collect.foreach{
+      v => println(s"${v._1}, [${v._2.mkString(",")}]")
+    }
+
+  }
+
+  def groupByKeyFunction(sc: SparkContext): Unit = {
+    /*
+      12. groupByKey
+      - RDD의 구성요소가 키와 값의 쌍으로 이뤄진 경우 사용가능한 메소드
+      - 수행 작업은 키를 기준으로 같은 키를 가진 요소들로 그룹을 만들고 그룹들로 구성된 새로운 RDD를 생성함
+    */
+    val rdd = sc.parallelize(List("a", "b", "c", "b", "c")).map((_, 1))
+    val result = rdd.groupByKey
+
+    result.collect.foreach {
+      v => println(s"${v._1}, [${v._2.mkString(",")}]")
+    }
+
   }
 
   def main(args: Array[String]): Unit = {
@@ -110,10 +203,19 @@ object RddOperation {
 
     collectFunction(sc)
     countFunction(sc)
+
     mapFunction(sc)
     flatMapFunction(sc)
     mapPartitionsFunction(sc)
     mapPartitionsWithIndexFunction(sc)
+    mapValuesFunction(sc)
+    flatMapValuesFunction(sc)
+
+    zipFunction(sc)
+    zipPartitionsFunction(sc)
+
+    groupByFunction(sc)
+    groupByKeyFunction(sc)
 
     sc.stop()
 
