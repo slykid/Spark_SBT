@@ -136,7 +136,7 @@ object RddOperation {
       - 파티션 단위로 zip 연산을 수행할 때 사용하는 메소드
       - 요소들의 집합 단위로 병합을 실행하므로 파티션의 개수만 동일하면 됨
     */
-    val rdd1 = sc.parallelize(List("a", "b", "c", "d", "e"))
+    val rdd1 = sc.parallelize(List("a", "b", "c"), 3)
     val rdd2 = sc.parallelize(List(1, 2), 3)
 
     val result = rdd1.zipPartitions(rdd2) {
