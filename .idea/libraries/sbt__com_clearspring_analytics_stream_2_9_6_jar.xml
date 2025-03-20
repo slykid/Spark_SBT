@@ -2,14 +2,10 @@
   <library name="sbt: com.clearspring.analytics:stream:2.9.6:jar" external-system-id="SBT">
     <CLASSES>
       <root url="jar://$USER_HOME$/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/clearspring/analytics/stream/2.9.6/stream-2.9.6.jar!/" />
-      <root url="file:///Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/clearspring/analytics/stream/2.9.6/stream-2.9.6-sources.jar!/" />
-      <root url="file:///Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/lib" />
     </SOURCES>
-    <jarDirectory url="file:///Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/lib" recursive="false" />
-    <jarDirectory url="file:///Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home/lib" recursive="false" type="SOURCES" />
   </library>
 </component>
